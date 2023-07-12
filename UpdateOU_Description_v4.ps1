@@ -1,6 +1,8 @@
 <#
-This script is made to update the description of the computers in the Default Computers OU
-The script then moves the machine to the corresponding OU
+This script will attempt to pull the primary user of a computer in AD from Intune. If the primary user is not yet set, the script detects the last logged on user, and sets this as the new primary user.
+
+With this information, the script finds the organizational unit the user is in, and moves the computer to the corresponding OU. It then attaches the end user's name to the computer as a description.
+
 Use the -live $true parameter to run live
 .Example
 UpdateOU_Description_v2.ps1
