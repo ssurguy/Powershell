@@ -398,22 +398,15 @@ function Find-UserManager ($PrimaryUser) {
 
 #This function moves the computer to the correct OU
 function Switch-ComputerOU ($PrimaryUser, $live, $computer, $ReadableName) {
-    $PMOPath = "OU Path"
-    $ITPath = "OU Path"
-    $AppDevPath = "OU Path"
-    $BIPath = "OU Path"
-    $ITPMOPath = "OU Path"
-    $AFTPath = "OU Path"
-    $CEOPath = "OU Path"
-    $CCCPath = "OU Path"
-    $HREAPath = "OU Path"
-    $MKTPath = "OU Path"
-    $OPSPath = "OU Path"
-    $SALPath = "OU Path"
-    $LGLPath = "OU Path"
-    $SRMPath = "OU Path"
-    ## the following varialbe is to ensure that anyone in a specific department will be sent to the correct IT OU
-    $ITManagerTitle = "example", "example", "*example*"
+    $testpath1 = "Test OU Path"
+    $testpath2 = "Main OU Path"
+    $testpath3 = "2nd OU Path"
+    $testpath4 = "3rd OU Path"
+    $testpath5 = "4th OU Path"
+    $testpath6 = "5th OU Path"
+    $testpath7 = "2nd Test OU Path"
+    ## the following varialbe is to ensure that anyone in a specific department will be sent to the correct OU
+    $testmanagertitle = "example", "example", "*example*"
     $userDepartment = (Get-ADUser -Filter {Name -eq $PrimaryUser} -Properties Department).Department
     If (!($userDepartment)) {
         $userDepartment = (Get-ADUser -Filter {DisplayName -eq $PrimaryUser} -Properties Department).Department
@@ -421,136 +414,72 @@ function Switch-ComputerOU ($PrimaryUser, $live, $computer, $ReadableName) {
 
     # Switch statement changes computer's OU based on associated user's department
     switch ($userDepartment) {
-        "IT & PMO" {
-            #Uses the manager's title in ITPMO to find the correct OU
+        "MultiLayerDepartment" {
+            #Uses the manager's title in MultiLayerDepartment to find the correct OU
             $managerTitle = Find-UserManager ($PrimaryUser)
-            If ($managerTitle -like "*PMO*") {
-                "Moving $ReadableName to the OU PATH`n"
+            If ($managerTitle -like "*example*") {
+                "Moving $ReadableName to the Main OU Path...`n"
                 If ($live -eq $true) {
-                    Get-ADComputer $computer | Move-ADObject -TargetPath $PMOPath
+                    Get-ADComputer $computer | Move-ADObject -TargetPath $testpath2
                     }
                     else {
-                        Get-ADComputer $computer | Move-ADObject -TargetPath $PMOPath -whatif
+                        Get-ADComputer $computer | Move-ADObject -TargetPath $testpath2 -whatif
                     }
             }
-            elseif ($managerTitle -in $ITManagerTitle) {
-                "Moving $ReadableName to the OU PATH...`n"
+            elseif ($managerTitle -in $testmanagertitle) {
+                "Moving $ReadableName to the 2nd OU Path...`n"
                 If ($live -eq $true) {
-                    Get-ADComputer $computer | Move-ADObject -TargetPath $ITPath
+                    Get-ADComputer $computer | Move-ADObject -TargetPath $testpath3
                     }
                     else {
-                        Get-ADComputer $computer | Move-ADObject -TargetPath $ITPath -whatif
-                    }
-            }
-            elseif ($managerTitle -like "*EXAMPLE*") {
-                "Moving $ReadableName to the OU PATH...`n"
-                If ($live -eq $true) {
-                    Get-ADComputer $computer | Move-ADObject -TargetPath $AppDevPath
-                    }
-                    else {
-                        Get-ADComputer $computer | Move-ADObject -TargetPath $AppDevPath -whatif
+                        Get-ADComputer $computer | Move-ADObject -TargetPath $testpath3 -whatif
                     }
             }
             elseif ($managerTitle -like "*EXAMPLE*") {
-                "Moving $ReadableName to the OU PATH...`n"
+                "Moving $ReadableName to the 3rd OU Path...`n"
                 If ($live -eq $true) {
-                    Get-ADComputer $computer | Move-ADObject -TargetPath $BIPath
+                    Get-ADComputer $computer | Move-ADObject -TargetPath $testpath4
                     }
                     else {
-                        Get-ADComputer $computer | Move-ADObject -TargetPath $BIPath -whatif
+                        Get-ADComputer $computer | Move-ADObject -TargetPath $testpath4 -whatif
+                    }
+            }
+            elseif ($managerTitle -like "*EXAMPLE*") {
+                "Moving $ReadableName to the 4th OU Path...`n"
+                If ($live -eq $true) {
+                    Get-ADComputer $computer | Move-ADObject -TargetPath $testpath5
+                    }
+                    else {
+                        Get-ADComputer $computer | Move-ADObject -TargetPath $testpath5 -whatif
                     }
             }
             else {
-                "Moving $ReadableName to the OU PATH...`n"
+                "Moving $ReadableName to the 5th OU Path...`n"
                 if ($live -eq $true) {
-                    Get-ADComputer $computer | Move-ADObject -TargetPath $ITPMOPath
+                    Get-ADComputer $computer | Move-ADObject -TargetPath $testpath6
                     }
                     else {
-                        Get-ADComputer $computer | Move-ADObject -TargetPath $ITPMOPath -whatif
+                        Get-ADComputer $computer | Move-ADObject -TargetPath $testpath6 -whatif
                     }
                     Write-Host "Please make sure to move this computer to the correct OU inside of ITPMO`n"
             }
         }
-         "AFT" {
-            Write-Host "Moving $ReadableName to the OU PATH...`n"
+         "Test Department" {
+            Write-Host "Moving $ReadableName to the Test OU PATH...`n"
             If ($live -eq $true) {
-            Get-ADComputer $computer | Move-ADObject -TargetPath $AFTPath
+            Get-ADComputer $computer | Move-ADObject -TargetPath $testpath1
             }
             else {
-                Get-ADComputer $computer | Move-ADObject -TargetPath $AFTPath -whatif
+                Get-ADComputer $computer | Move-ADObject -TargetPath $testpath1 -whatif
             }
         }
-        "CEO" {
-            Write-Host "Moving $ReadableName to the OU PATH`n"
+        "Test Department 2" {
+            Write-Host "Moving $ReadableName to the 2nd Test OU PATH`n"
             If ($live -eq $true) {
-            Get-ADComputer $computer | Move-ADObject -TargetPath $CEOPath
+            Get-ADComputer $computer | Move-ADObject -TargetPath $testpath7
             }
             else {
-                Get-ADComputer $computer | Move-ADObject -TargetPath $CEOPath -whatif
-            }
-        }
-        "Customer Care" {
-            #This moves any customer care department members to the OU PATH
-                Write-Host "Moving $ReadableName to the OU PATH`n"
-                If ($live -eq $true) {
-                Get-ADComputer $computer | Move-ADObject -TargetPath $CCCPath
-                }
-                else {
-                    Get-ADComputer $computer | Move-ADObject -TargetPath $CCCPath
-                }
-            }
-        "HRCA" {
-            Write-Host "Moving $ReadableName to the OU PATH`n"
-            If ($live -eq $true) {
-            Get-ADComputer $computer | Move-ADObject -TargetPath $HREAPath
-            }
-            else {
-                Get-ADComputer $computer | Move-ADObject -TargetPath $HREAPath -whatif
-            }
-        }
-        "Legal & Governance" {
-            Write-Host "Moving $ReadableName to the OU PATH`n"
-            If ($live -eq $true){
-            Get-ADComputer $computer | Move-ADObject -TargetPath $LGLPath
-            }
-            else {
-                Get-ADComputer $computer | Move-ADObject -TargetPath $LGLPath -whatif
-            }
-        }
-        "Marketing" {
-            Write-Host "Moving $ReadableName to the OU PATH`n"
-            If ($live -eq $true) {
-            Get-ADComputer $computer | Move-ADObject -TargetPath $MKTPath
-            }
-            else {
-                Get-ADComputer $computer | Move-ADObject -TargetPath $MKTPath -whatif
-            }
-        }
-        "Operations" {
-            Write-Host "Moving $ReadableName to the OU PATH`n"
-            If ($live -eq $true){
-            Get-ADComputer $computer | Move-ADObject -TargetPath $OPSPath
-            }
-            else {
-                Get-ADComputer $computer | Move-ADObject -TargetPath $OPSPath -whatif
-            }
-        }
-        "Sales" {
-            Write-Host "Moving $ReadableName to the OU PATH`n"
-            If ($live -eq $true) {
-            Get-ADComputer $computer | Move-ADObject -TargetPath $SALPath
-            }
-            else {
-                Get-ADComputer $computer | Move-ADObject -TargetPath $SALPath -whatif
-            }
-        }
-        "SRM" {
-            Write-Host "Moving $ReadableName to the OU PATH`n"
-            If ($live -eq $true) {
-            Get-ADComputer $computer | Move-ADObject -TargetPath $SRMPath
-            }
-            else {
-                Get-ADComputer $computer | Move-ADObject -TargetPath $SRMPath -whatif
+                Get-ADComputer $computer | Move-ADObject -TargetPath $testpath7 -whatif
             }
         }
         Default {
