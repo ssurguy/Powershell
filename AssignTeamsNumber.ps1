@@ -1,16 +1,15 @@
 <#
 .Synopsis
-Assign Teams Number and Signature
+Assign Teams Number
 
 .Description
-Choose the signature group and add user to said group.
 Assigns the first available teams number, prioritizing the numbers beginning with 770.
 Adds the number to the Telephone Number field in AD. 
 
 .Example
 .\AssignTeamsNumber.ps1 -User XXXXXX
 
-Updated: 8/17/2023
+Updated: 8/22/2023
 
 #>
 
